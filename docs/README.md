@@ -48,7 +48,7 @@ You can just pass in your information at runtime:
 ``` sh
 tokendito --username prod_service_user@company.com \
 --role-arn arn:aws:iam::123456789000:role/dowjones-hammer-engineer \
---okta-mfa push \
+--mfa-method push \
 --okta-aws-tile https://acme.oktapreview.com/home/amazon_aws/b07384d113edec49eaa6/123 \
 ```
 
@@ -58,7 +58,7 @@ Or you can put your parameters into a single [profile](tokendito.ini.md) and ref
 [engineer]
 okta_aws_tile = https://acme.oktapreview.com/home/amazon_aws/b07384d113edec49eaa6/123
 okta_username = jane.doe@acme.com
-okta_mfa = push
+mfa_method = push
 role_arn = arn:aws:iam::123456789000:role/engineer
 ```
 
@@ -74,7 +74,7 @@ tokendito --profile engineer
 usage: tokendito [-h] [--version] [--configure] [--username OKTA_USERNAME] [--password OKTA_PASSWORD] [--profile USER_CONFIG_PROFILE] [--config-file USER_CONFIG_FILE]
                  [--loglevel {DEBUG,INFO,WARN,ERROR}] [--log-output-file USER_LOG_OUTPUT_FILE] [--aws-config-file AWS_CONFIG_FILE] [--aws-output AWS_OUTPUT]
                  [--aws-profile AWS_PROFILE] [--aws-region AWS_REGION] [--aws-role-arn AWS_ROLE_ARN] [--aws-shared-credentials-file AWS_SHARED_CREDENTIALS_FILE]
-                 [--okta-org OKTA_ORG | --okta-tile OKTA_TILE] [--okta-mfa OKTA_MFA] [--okta-mfa-response OKTA_MFA_RESPONSE] [--quiet]
+                 [--okta-org OKTA_ORG | --okta-tile OKTA_TILE] [--mfa-method MFA_METHOD] [--okta-mfa-response OKTA_MFA_RESPONSE] [--quiet]
 
 Gets a STS token to use with the AWS CLI and SDK.
 
@@ -109,7 +109,8 @@ options:
   --okta-org OKTA_ORG   Set the Okta Org base URL. This enables role auto-discovery
   --okta-tile OKTA_TILE
                         Okta tile URL to use.
-  --okta-mfa OKTA_MFA   Sets the MFA method
+  --mfa-method MFA_METHOD
+                        Sets the MFA method
   --okta-mfa-response OKTA_MFA_RESPONSE
                         Sets the MFA response to a challenge
   --quiet               Suppress output```
@@ -124,7 +125,7 @@ tokendito supports the use of environment variables and user configuration equiv
 
 ## Precedence
 Credentials and configuration settings take precedence in the following order:  
-1) Command line options -- Overrides settings in any other location. You can specify \--username, \--role-arn, \--okta-aws-tile, and \--okta-mfa as parameters on the command line.  
+1) Command line options -- Overrides settings in any other location. You can specify \--username, \--role-arn, \--okta-aws-tile, and \--mfa-method as parameters on the command line.  
 2) Environment variables -- You can store values in your system\'s environment variables. It overrides the configuration file.  
 3) User configuration file -- The user configuration file is updated when you run the command tokendito \--configure. tokendito uses [platformdirs](https://github.com/platformdirs/platformdirs) to store user configuration in the [tokendito.ini](tokendito.ini.md) file. This file can contain the credential details for the default profile and any named profiles.   
 
@@ -147,7 +148,7 @@ The following table lists the environment variable and user configuration entry 
 | --aws-shared-credentials-file | TOKENDITO_AWS_SHARED_CREDENTIALS_FILE        | aws_shared_credentials_file | 
 | --okta-org | TOKENDITO_OKTA_ORG        | okta_org | 
 | --okta-tile | TOKENDITO_OKTA_TILE        | okta_tile | 
-| --okta-mfa | TOKENDITO_OKTA_MFA        | okta_mfa | 
+| --mfa-method | TOKENDITO_MFA_METHOD        | mfa_method | 
 | --okta-mfa-response | TOKENDITO_OKTA_MFA_RESPONSE        | okta_mfa_response | 
 | --quiet | TOKENDITO_USER_QUIET        | quiet | 
 
